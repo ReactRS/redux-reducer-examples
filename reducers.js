@@ -1,4 +1,5 @@
 import './actions'
+import { combineReducers } from 'redux'
 
 const initialState = {
   cart: [],
@@ -45,22 +46,15 @@ function priceCalcReducer(state = {}, action){
   switch (action.type){
     case 'EVAL_CART_TOTAL':
       state
-
-
+    default:
+      return state;
   }
 }
 
+const mainReducer = combineReducers({
+  cartReducer,
+  discountReducer,
+  priceCalcReducer
+});
 
-function mainReducer(state = initialState, action){
-  return {
-    cart: cartReducer(state.cart, action),
-    rawCost: priceCalcReducer(state, action),
-    rawCostPlusTax: priceCalcReducer(state, action),
-    costAfterDiscount: priceCalcReducer(state, action),
-    discountsEnabled: discountReducer(state, action).discountsEnabled,
-    discountRate: discountReducer(state, action).discountRate
-  }
-}
-
-
-
+export default mainReducer
